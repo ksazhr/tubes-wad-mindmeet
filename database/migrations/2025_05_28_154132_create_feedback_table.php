@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->id();
+            $table->int('nim'); 
+            $table->foreign('nim')->references('nim')->on('mahasiswa')->onDelete('cascade');
+            $table->string('konselor_id');
+            $table->foreign('konselor_id')->references('id')->on('konselor')->onDelete('cascade'); 
+            $table->string('komentar');
+            $table->integer('rating');
             $table->timestamps();
         });
     }
