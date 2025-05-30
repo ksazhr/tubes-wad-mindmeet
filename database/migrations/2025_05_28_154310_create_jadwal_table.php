@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('jadwal', function (Blueprint $table) {
             $table->id();
-            $table->int('konselor_id'); 
+            $table->unsignedBigInteger('konselor_id'); 
             $table->foreign('konselor_id')->references('id')->on('konselor')->onDelete('cascade');
             $table->date('hari'); 
             $table->time('waktu');
             $table->string('status');
             $table->timestamps();
         });
-    }
+  
+  }
 
     /**
      * Reverse the migrations.

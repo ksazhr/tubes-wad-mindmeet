@@ -10,10 +10,11 @@ class Jadwal extends Model
     use HasFactory;
 
     protected $fillable = [
-        'tanggal',
-        'waktu',
-        'status',
-    ];
+    'konselor_id',
+    'hari',
+    'waktu',
+    'status',
+];
 
     public function Konselor()
     {
