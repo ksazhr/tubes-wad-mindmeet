@@ -11,6 +11,8 @@ class Feedback extends Model
     protected $fillable = [
         'komentar',
         'rating',
+        'nim',
+        'konselor_id'
     ];
 
     // Relasi: Satu Mahasiswa bisa membuat banyak Feedback
