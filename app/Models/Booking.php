@@ -12,7 +12,8 @@ class Booking extends Model
     protected $fillable = [
         'nim',
         'tanggal',
-        'status'
+        'status',
+        'jadwal_id'
     ];
 
     // Relasi : Satu Mahasiswa bisa melakukan berkali-kali booking
