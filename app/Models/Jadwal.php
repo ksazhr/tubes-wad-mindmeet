@@ -2,17 +2,11 @@
 
 namespace App\Models;
 
-<<<<<<< HEAD
-=======
 use Illuminate\Database\Eloquent\Factories\HasFactory;
->>>>>>> origin/agung
 use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
-<<<<<<< HEAD
-    //
-=======
     use HasFactory;
 
     protected $fillable = [
@@ -26,5 +20,4 @@ class Jadwal extends Model
     {
         return $this->belongsTo(Konselor::class);
     }
->>>>>>> origin/agung
 }

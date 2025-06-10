@@ -3,13 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-<<<<<<< HEAD
-
-class Booking extends Model
-{
-    //
-}
-=======
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Booking extends Model
@@ -35,4 +28,3 @@ class Booking extends Model
         return $this->belongsTo(Jadwal::class);
     }
 }
->>>>>>> origin/ona
