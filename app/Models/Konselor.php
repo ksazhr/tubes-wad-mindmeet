@@ -2,17 +2,11 @@
 
 namespace App\Models;
 
-<<<<<<< HEAD
-=======
 use Illuminate\Database\Eloquent\Casts\Attribute;
->>>>>>> kania
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Konselor extends Model
 {
-<<<<<<< HEAD
-    //
-=======
     use HasFactory;
 
     protected $fillable = [
@@ -35,5 +29,4 @@ class Konselor extends Model
     {
         return $this->hasMany(Feedback::class);
     }
->>>>>>> kania
 }

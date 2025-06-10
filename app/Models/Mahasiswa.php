@@ -2,16 +2,8 @@
 
 namespace App\Models;
 
-<<<<<<< HEAD
-use Illuminate\Database\Eloquent\Model;
-
-class Mahasiswa extends Model
-{
-    //
-}
-=======
 use Illuminate\Database\Eloquent\Model;  
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Mahasiswa extends Model
 {
     
@@ -44,4 +36,3 @@ class Mahasiswa extends Model
 
     
 }
->>>>>>> origin/rindu
