@@ -46,6 +46,11 @@ class Mahasiswa extends Model
         return $this->hasMany(Booking::class, 'nim', 'nim');
     }
 
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'nim', 'nim');
+    }
+
     public function getEmailUserAttribute()
     {
         return $this->user ? $this->user->email : ($this->attributes['email'] ?? null);

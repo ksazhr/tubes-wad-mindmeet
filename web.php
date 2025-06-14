@@ -29,6 +29,8 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::post('/appointment/submit', [BookingController::class, 'bookingJadwal'])->name('booking.submit');
     Route::put('/booking/{id}/reschedule', [BookingController::class, 'reschedule'])->name('booking.reschedule');
     Route::put('/booking/{id}/cancel', [BookingController::class, 'cancelBooking'])->name('booking.cancel');
+    Route::get('/feedback', [FeedbackController::class, 'showForm'])->name('feedback');
+    Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 });
 
 // ========== KONSELOR ROUTES ==========
@@ -42,6 +44,7 @@ Route::middleware(['auth', 'role:konselor'])->prefix('konselor')->group(function
     Route::get('/my-schedules/{id}/edit', [JadwalController::class, 'edit'])->name('konselor.my_schedules.edit');
     Route::put('/my-schedules/{id}', [JadwalController::class, 'update'])->name('konselor.my_schedules.update');
     Route::delete('/my-schedules/{id}', [JadwalController::class, 'destroy'])->name('konselor.my_schedules.destroy');
+    Route::get('/feedback', [FeedbackController::class, 'showFeedback'])->name('konselor.feedback');
 });
 
 // ========== ADMIN ==========
@@ -76,4 +79,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Feedback Management
     Route::get('/feedbacks', [FeedbackController::class, 'index'])->name('manage.feedback');
+    Route::get('/feedbacks', [FeedbackController::class, 'manageFeedback'])->name('manage.feedback');
+    Route::get('/feedbacks/{id}/edit', [FeedbackController::class, 'edit'])->name('feedback.edit');
+    Route::delete('/feedbacks/{id}', [FeedbackController::class, 'destroy'])->name('feedback.destroy');
 });

@@ -37,7 +37,7 @@ class BookingController extends Controller
         return view('mahasiswa/home-mahasiswa', compact('user', 'appointments'));
     }
 
-    public function lihatJadwal()
+    public function lihatJadwal(Request $request)
     {
         $jadwals = Jadwal::where('status', 'available')
                          ->where('hari', '>=', now()->toDateString())
@@ -49,6 +49,11 @@ class BookingController extends Controller
                          })
                          ->with('konselor')
                          ->get();
+
+        if ($request->expectsJson()) {
+            return response()->json($jadwals, 200);
+        }
+
         return view('mahasiswa/jadwal-mahasiswa', compact('jadwals'));
     }
 
@@ -81,6 +86,9 @@ class BookingController extends Controller
         if (Booking::where('jadwal_id', $request->jadwal_id)
                     ->whereNotIn('status', ['cancelled', 'completed'])
                     ->exists()) {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Jadwal ini tidak tersedia untuk dibooking.'], 409);
+            }
             return back()->with('error', 'Jadwal ini sudah dibooking atau tidak tersedia.');
         }
 
@@ -96,6 +104,10 @@ class BookingController extends Controller
 
         $jadwalToBook->status = 'booked';
         $jadwalToBook->save();
+
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Booking berhasil dibuat!', 'booking' => $booking], 201);
+        }
 
         return redirect()->route('home')->with('success', 'Booking berhasil dibuat!');
     }
@@ -127,6 +139,10 @@ class BookingController extends Controller
         
         $newJadwal = Jadwal::findOrFail($request->jadwal_id_baru);
 
+        if ($newJadwal->status !== 'available') {
+            return response()->json(['message' => 'Jadwal baru tidak tersedia.'], 409);
+        }
+
         $booking->jadwal_id = $request->jadwal_id_baru;
         $booking->tanggal = $newJadwal->hari;
         $booking->save();
@@ -155,6 +171,10 @@ class BookingController extends Controller
             $jadwal->save();
         }
 
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Booking dibatalkan.', 'booking' => $booking], 200);
+        }
+        
         return redirect()->route('home')->with('success', 'Booking berhasil dibatalkan dan slot jadwal sudah tersedia kembali!');
     }
 
@@ -227,6 +247,10 @@ class BookingController extends Controller
              $newJadwal->save();
         }
 
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Appointment berhasil diperbarui!', 'booking' => $booking], 200);
+        }
+
         return redirect()->route('manage.booking')->with('success', 'Appointment berhasil diperbarui!');
     }
 
@@ -241,6 +265,10 @@ class BookingController extends Controller
         }
 
         $booking->delete();
+
+        if (request()->expectsJson()) {
+            return response()->json(['message' => 'Booking berhasil dihapus.'], 200);
+        }
         
         return redirect()->route('manage.booking')->with('success', 'Booking berhasil dihapus.');
     }
