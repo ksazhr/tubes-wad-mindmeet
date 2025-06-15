@@ -35,6 +35,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiController::class, 'logout'])->name('api.logout');
     Route::get('/profile', [ApiController::class, 'profile'])->name('api.profile');
 
+    // --- Mahasiswa ---
+    Route::get('/mahasiswa', [ApiController::class, 'indexMahasiswa'])->name('api.mahasiswa.index');
+    Route::get('/mahasiswa/{mahasiswa}', [ApiController::class, 'showMahasiswa'])->name('api.mahasiswa.show');
+    Route::put('/mahasiswa/{mahasiswa}', [ApiController::class, 'updateMahasiswa'])->name('api.mahasiswa.update');
+    Route::delete('/mahasiswa/{mahasiswa}', [ApiController::class, 'destroyMahasiswa'])->name('api.mahasiswa.destroy');
+
     // --- Booking (Untuk Mahasiswa) ---
     Route::get('/jadwal-tersedia', [ApiController::class, 'getAvailableJadwal'])->name('api.jadwal.available');
     Route::post('/booking', [ApiController::class, 'createBooking'])->name('api.booking.store');
