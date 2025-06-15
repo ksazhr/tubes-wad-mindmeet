@@ -24,7 +24,7 @@
             <li><a href="{{ route('manage.counselor') }}">Manage Counselor</a></li>
             <li><a href="{{ route('manage.schedule') }}">Manage Schedule</a></li>
             <li><a href="{{ route('manage.student') }}">Manage Student</a></li>
-            <li><a href="https://bit.ly/3SKtp29" target="_blank" class="btn btn-primary"> Isi Formulir</a><li></li>
+            <li><a href="{{ route('manage.feedback') }}" class="active"> Manage Feedback</a></li>
             <li style="margin-top: 114%;"><a href="{{ route('logout') }}">Log Out</a></li>
         </ul>
     </div>
