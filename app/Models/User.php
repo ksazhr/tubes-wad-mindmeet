@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+// Hapus baris ini:
+// use Spatie\Permission\Traits\HasRoles;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable; // <-- PASTIKAN TIDAK ADA HasRoles DI SINI
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', // Pastikan kolom 'role' ini ada di tabel 'users' Anda
     ];
 
     /**
@@ -44,5 +47,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function mahasiswa()
+    {
+        return $this->hasOne(Mahasiswa::class, 'user_id', 'id');
+    }
+
+    public function konselor() 
+    { 
+        return $this->hasOne(Konselor::class, 'user_id', 'id'); 
     }
 }

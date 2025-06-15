@@ -35,14 +35,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiController::class, 'logout'])->name('api.logout');
     Route::get('/profile', [ApiController::class, 'profile'])->name('api.profile');
 
-    // --- Mahasiswa ---
-    Route::get('/mahasiswa', [ApiController::class, 'indexMahasiswa'])->name('api.mahasiswa.index');
-    Route::get('/mahasiswa/{mahasiswa}', [ApiController::class, 'showMahasiswa'])->name('api.mahasiswa.show');
-    Route::put('/mahasiswa/{mahasiswa}', [ApiController::class, 'updateMahasiswa'])->name('api.mahasiswa.update');
-    Route::delete('/mahasiswa/{mahasiswa}', [ApiController::class, 'destroyMahasiswa'])->name('api.mahasiswa.destroy');
-
     // --- Booking (Untuk Mahasiswa) ---
     Route::get('/jadwal-tersedia', [ApiController::class, 'getAvailableJadwal'])->name('api.jadwal.available');
+   Route::get('/my-bookings', [ApiController::class, 'myBookings'])->name('api.my.bookings');
     Route::post('/booking', [ApiController::class, 'createBooking'])->name('api.booking.store');
     Route::post('/booking/{id}/cancel', [ApiController::class, 'cancelBooking'])->name('api.booking.cancel');
 
@@ -62,7 +57,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // --- Konselor (Aksi oleh Admin) ---
     // Rute untuk menambah, mengubah, dan menghapus konselor (membutuhkan otorisasi Gate)
-    Route::get('/konselor', [ApiController::class, 'indexKonselor'])->name('api.konselor.index');
     Route::post('/konselor', [ApiController::class, 'storeKonselor'])->name('api.konselor.store');
     Route::put('/konselor/{konselor}', [ApiController::class, 'updateKonselor'])->name('api.konselor.update');
     Route::delete('/konselor/{konselor}', [ApiController::class, 'destroyKonselor'])->name('api.konselor.destroy');
