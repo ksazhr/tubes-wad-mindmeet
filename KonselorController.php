@@ -4,10 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Konselor;
-<<<<<<< Updated upstream
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-=======
 use App\Models\Booking;
 use App\Models\User; // <--- PASTIKAN INI ADA UNTUK MENGAKSES MODEL USER
 use Illuminate\Http\Request;
@@ -16,34 +12,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
->>>>>>> Stashed changes
 
 class KonselorController extends Controller
 {
-    public function __construct()
+    public function dashboard(Request $request)
     {
-<<<<<<< Updated upstream
-        // Hanya user terautentikasi yang bisa mengakses semua method kecuali index dan show
-        $this->middleware('auth:sanctum')->except(['index', 'show']);
-    }
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        // Tambahkan fitur pencarian dan paginasi sederhana
-        $konselor = Konselor::query();
-        if ($request->has('search')) {
-            $searchTerm = $request->input('search');
-            $konselor->where('name', 'like', "%{$searchTerm}%")
-                     ->orWhere('email', 'like', "%{$searchTerm}%");
-        }
-        $konselor = $konselor->paginate(10); // 10 konselor per halaman
-        return response()->json($konselor);
-    }
-
-    /**
-=======
         $user = Auth::user()->load('konselor');
 
         if (!$user || $user->role !== 'konselor' || !$user->konselor) {
@@ -111,27 +84,10 @@ class KonselorController extends Controller
     }
 
     /**
->>>>>>> Stashed changes
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-<<<<<<< Updated upstream
-        // Otorisasi: Hanya admin yang boleh menambah konselor
-        if (!Gate::allows('manage-konselor', $request->user())) {
-             return response()->json(['message' => 'Anda tidak diizinkan melakukan aksi ini.'], 403);
-        }
-
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'spesialisasi' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:konselor,email',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        $konselor = Konselor::create($validatedData);
-        return response()->json(['message' => 'Konselor berhasil ditambahkan.', 'data' => $konselor], 201);
-=======
         if (!Gate::allows('manage-konselor', Auth::user())) {
             return redirect()->json(['message' => 'Anda tidak diizinkan melakukan aksi ini.'], 403);
         }
@@ -153,7 +109,6 @@ class KonselorController extends Controller
         $konselor = Konselor::create($validatedData);
 
         return redirect()->route('manage.counselor')->with('success', 'Konselor berhasil ditambahkan.');
->>>>>>> Stashed changes
     }
 
     /**
@@ -165,8 +120,6 @@ class KonselorController extends Controller
     }
 
     /**
-<<<<<<< Updated upstream
-=======
      * Menampilkan form untuk mengedit konselor.
      */
     public function edit(Konselor $konselor)
@@ -182,27 +135,10 @@ class KonselorController extends Controller
 
 
     /**
->>>>>>> Stashed changes
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Konselor $konselor)
     {
-<<<<<<< Updated upstream
-        // Otorisasi: Hanya admin atau konselor yang bersangkutan yang boleh melihat detail
-        if (!Gate::allows('view-konselor', $request->user())) {
-            return response()->json(['message' => 'Anda tidak diizinkan melakukan aksi ini.'], 403);
-        }
-
-        $validatedData = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'spesialisasi' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|string|email|max:255|unique:konselor,email,' . $konselor->id,
-            'password' => 'sometimes|required|string|min:8|confirmed',
-        ]);
-
-        $konselor->update($validatedData);
-        return response()->json(['message' => 'Konselor berhasil diperbarui.', 'data' => $konselor]);
-=======
         // Muat relasi 'user' karena kita akan memperbarui data user juga
         $konselor = $konselor->load('user');
 
@@ -245,24 +181,13 @@ class KonselorController extends Controller
         }
 
         return redirect()->route('manage.counselor')->with('success', 'Data konselor berhasil diperbarui!');
->>>>>>> Stashed changes
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, string $id)
+    public function destroy(Request $request, Konselor $konselor)
     {
-<<<<<<< Updated upstream
-        // Otorisasi: Hanya admin yang boleh menghapus konselor
-        if (!Gate::allows('manage-konselor', $request->user())) {
-            return response()->json(['message' => 'Anda tidak diizinkan melakukan aksi ini.'], 403);
-        }
-
-        $konselor = Konselor::findOrFail($id);
-        $konselor->delete();
-        return response()->json(['message' => 'Konselor berhasil dihapus.']);
-=======
         // Pastikan Anda mengimpor kelas User di bagian atas file: use App\Models\User;
         
         if (!Gate::allows('manage-konselor', Auth::user())) {
@@ -285,7 +210,5 @@ class KonselorController extends Controller
         // --- Akhir perubahan ---
         
         return redirect()->route('manage.counselor')->with('success', 'Konselor dan User terkait berhasil dihapus.');
->>>>>>> Stashed changes
     }
-
 }
